@@ -1,26 +1,283 @@
 @import "tailwindcss";
 
+/* ── Design tokens ─────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background:      #faf7f2;
+  --foreground:      #171717;
+  --surface:         #ffffff;
+  --surface-strong:  #f0e8dc;
+  --border:          #e4d8c7;
+  --muted:           #61564a;
+  --accent:          #ea580c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+  --color-surface:        var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-border:         var(--border);
+  --color-muted:          var(--muted);
+  --color-accent:         var(--accent);
+  --font-sans: "Inter", "Segoe UI", Arial, Helvetica, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-display: "Plus Jakarta Sans", var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ───────────────────────────────────────────── */
+html {
+  color-scheme: light;
+  background: var(--background);
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:  var(--background);
+  color:       var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* ── Dark theme tokens ─────────────────────────────────
+   Pages that use the CSS design tokens (--background,
+   --foreground, --surface, …) adapt automatically. Hardcoded
+   warm hex backgrounds on individual sections remain light
+   by design — restyling every section is out of scope. */
+html.dark {
+  color-scheme: dark;
+  --background:      #17130f;
+  --foreground:      #f3ede4;
+  --surface:         #221c16;
+  --surface-strong:  #2b241c;
+  --border:          #3a3026;
+  --muted:           #b6a896;
+  --accent:          #fb923c;
+}
+
+html.dark .fd-glass {
+  background: rgba(28, 22, 17, 0.72);
+  border-color: rgba(90, 74, 58, 0.6);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbars globally */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Custom keyframes (used via Tailwind animate-[…]) ─ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-8deg) scale(1);    }
+  50%       { transform: rotate(8deg)  scale(1.05); }
+}
+
+/* ── Premium motion utilities ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fd-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes fd-float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-16px) rotate(1.2deg); }
+}
+
+@keyframes fd-ingredient {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  50%      { transform: translateY(-14px) rotate(10deg) scale(1.06); }
+}
+
+@keyframes fd-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(28px, -22px) scale(1.08); }
+  66%      { transform: translate(-22px, 16px) scale(0.94); }
+}
+
+@keyframes fd-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(18px, -22px); }
+}
+
+@keyframes fd-glow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.12); }
+}
+
+@keyframes fd-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fd-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fd-pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+  70% { box-shadow: 0 0 0 16px rgba(249, 115, 22, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+@keyframes fd-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.72); }
+}
+
+@keyframes fd-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fd-ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes fd-sheen {
+  from { transform: translateX(-140%) skewX(-18deg); }
+  to   { transform: translateX(260%) skewX(-18deg); }
+}
+
+@keyframes fd-particle {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50%      { transform: translate(14px, -26px) scale(1.2); opacity: 1; }
+}
+
+@keyframes fd-gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ── Motion layers ────────────────────────────────────── */
+.fd-float        { animation: fd-float 6s ease-in-out infinite; }
+.fd-float-slow   { animation: fd-float-slow 8s ease-in-out infinite; }
+.fd-ingredient   { animation: fd-ingredient 7s ease-in-out infinite; }
+.fd-drift        { animation: fd-drift 9s ease-in-out infinite; }
+.fd-blob         { animation: fd-blob 16s ease-in-out infinite; }
+.fd-glow-pulse   { animation: fd-glow 5s ease-in-out infinite; }
+.fd-spin-slow    { animation: fd-spin-slow 42s linear infinite; }
+.fd-pulse-ring   { animation: fd-pulse-ring 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.fd-pulse-dot    { animation: fd-pulse-dot 2.4s ease-in-out infinite; }
+.fd-particle     { animation: fd-particle 8s ease-in-out infinite; }
+
+/* ── Gradient text ────────────────────────────────────── */
+.fd-text-gradient {
+  background-image: linear-gradient(115deg, #c2410c, #f97316 42%, #fb923c 72%, #fde68a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Animated orange gradient button ──────────────────── */
+.fd-gradient-btn {
+  background-image: linear-gradient(100deg, #ea580c, #f97316 40%, #fb923c 65%, #f97316);
+  background-size: 220% 100%;
+  background-position: 0% 0%;
+  transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.fd-gradient-btn:hover {
+  background-position: 100% 0%;
+}
+.fd-gradient-btn:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 3px;
+}
+
+.fd-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.fd-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  pointer-events: none;
+}
+.fd-sheen:hover::after {
+  animation: fd-sheen 0.9s ease forwards;
+}
+
+.fd-ripple-host { position: relative; overflow: hidden; }
+.fd-ripple {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.55);
+  transform: scale(0);
+  animation: fd-ripple 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fd-spinner {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 9999px;
+  border: 2.5px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #ffffff;
+  animation: fd-spin 0.8s linear infinite;
+}
+
+/* ── Textures ─────────────────────────────────────────── */
+.fd-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+.fd-grid {
+  background-image:
+    linear-gradient(rgba(249, 115, 22, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 115, 22, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.fd-grid-light {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.fd-dots {
+  background-image: radial-gradient(circle, rgba(249, 115, 22, 0.18) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+/* ── Glass helpers ────────────────────────────────────── */
+.fd-glass {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    0 18px 42px rgba(111, 80, 50, 0.12),
+    0 4px 14px rgba(111, 80, 50, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.fd-shadow-soft {
+  box-shadow:
+    0 24px 48px -12px rgba(111, 80, 50, 0.18),
+    0 8px 24px -8px rgba(111, 80, 50, 0.1);
 }

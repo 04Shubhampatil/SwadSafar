@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "title": "Creamy Tomato Pasta",
+    "image": "/cardImage/tomato_pasta.webp",
+    "cuisine": "Italian",
+    "prepTime": "20 min",
+    "rating": 4.9,
+    "reviewsCount": "2.3K",
+    "difficulty": "Easy",
+    "chef": {
+      "name": "Chef Maria",
+      "avatar": "/cardImage/chef_maria.webp"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Chicken Tikka Masala",
+    "image": "/cardImage/chicken_tikka.webp",
+    "cuisine": "Indian",
+    "prepTime": "45 min",
+    "rating": 4.8,
+    "reviewsCount": "1.8K",
+    "difficulty": "Medium",
+    "chef": {
+      "name": "Chef Maria",
+      "avatar": "/cardImage/chef_maria1.webp"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Avocado Toast Deluxe",
+    "image": "/cardImage/avocado_toast.webp",
+    "cuisine": "Breakfast",
+    "prepTime": "15 min",
+    "rating": 4.7,
+    "reviewsCount": "987",
+    "difficulty": "Easy",
+    "chef": {
+      "name": "Chef Maria",
+      "avatar": "/cardImage/chef_maria2.webp"
+    }
+  },
+  {
+    "id": "4",
+    "title": "Chocolate Lava Cake",
+    "image": "/cardImage/lava_cake.webp",
+    "cuisine": "Dessert",
+    "prepTime": "35 min",
+    "rating": 4.9,
+    "reviewsCount": "3.1K",
+    "difficulty": "Medium",
+    "chef": {
+      "name": "Chef Maria",
+      "avatar": "/cardImage/chef_maria3.webp"
+    }
+  }
+]
